@@ -31,7 +31,8 @@ envContent.split("\n").forEach((line) => {
         const match = trimmed.match(/^([^=]+)=(.*)$/);
         if (match) {
             const key = match[1].trim();
-            const value = match[2].trim().replace(/^["']|["']$/g, ""); // Remover comillas
+            // Remove quotes first, then trim to handle edge cases like " password" correctly
+            const value = match[2].replace(/^["']|["']$/g, "").trim();
             envVars[key] = value;
         }
     }
@@ -53,7 +54,9 @@ if (missingVars.length > 0) {
 const emptyVars = requiredVars.filter((v) => envVars[v] === "");
 if (emptyVars.length > 0) {
     console.warn(
-        `⚠️  Advertencia: Variables con valor vacío en .env: ${emptyVars.join(", ")}`
+        `⚠️  Advertencia: Variables con valor vacío en .env: ${emptyVars.join(
+            ", "
+        )}`
     );
 }
 

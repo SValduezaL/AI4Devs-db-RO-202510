@@ -216,7 +216,7 @@ model Interview {
   employeeId     Int            @map("employee_id")
   interviewDate  DateTime       @map("interview_date")
   result         String?        @db.VarChar(50)
-  score          Int?
+  score          Int?           // Check constraint: score must be NULL or between 0-100 (enforced in DB migration)
   notes          String?        @db.Text
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
@@ -229,5 +229,7 @@ model Interview {
   @@index([employeeId])
   @@index([interviewDate])
   @@index([result])
+  // Note: Check constraint for score (0-100) is defined in SQL migration
+  // CONSTRAINT "Interview_score_check" CHECK ("score" IS NULL OR ("score" >= 0 AND "score" <= 100))
   @@map("Interview")
 }

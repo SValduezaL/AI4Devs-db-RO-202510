@@ -40,7 +40,8 @@ Esta migración expande la base de datos con las nuevas entidades necesarias par
 
 - `onDelete: Cascade` para relaciones donde tiene sentido (ej: InterviewStep → InterviewFlow)
 - `onDelete: Restrict` para prevenir eliminaciones accidentales (ej: Application → Position)
-- Check constraint en Interview.score (0-100)
+- Check constraint en Interview.score (0-100): Añadido en migración SQL (`add_interview_score_check.sql`)
+  - **Nota**: Prisma no soporta check constraints directamente en el schema, por lo que debe añadirse manualmente o mediante migración raw SQL
 
 ### Timestamps
 
