@@ -16,8 +16,33 @@ declare global {
 }
 
 // Cargar .env desde la raíz del proyecto (donde está docker-compose.yml)
+// Solución que funciona tanto en desarrollo (ts-node-dev) como en producción (compilado)
+// En desarrollo: __dirname es backend/src, en producción: __dirname es backend/dist
 import path from 'path';
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+import fs from 'fs';
+
+const getRootEnvPath = (): string => {
+  // En desarrollo: __dirname = backend/src, subir 2 niveles → raíz
+  // En producción: __dirname = backend/dist, subir 2 niveles → raíz
+  const rootPath = path.resolve(__dirname, '../..');
+  const envPath = path.join(rootPath, '.env');
+  
+  // Verificar que el archivo existe
+  if (fs.existsSync(envPath)) {
+    return envPath;
+  }
+  
+  // Fallback: si no encontramos en la raíz, usar process.cwd()
+  // Esto cubre casos donde se ejecuta desde otro directorio
+  const cwd = process.cwd();
+  if (cwd.endsWith('backend')) {
+    return path.resolve(cwd, '..', '.env');
+  }
+  
+  return path.join(cwd, '.env');
+};
+
+dotenv.config({ path: getRootEnvPath() });
 const prisma = new PrismaClient();
 
 export const app = express();
