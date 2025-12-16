@@ -1,0 +1,77 @@
+---
+description: "Memory Bank mandatory workflow"
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Mandatory Memory Bank Workflow
+
+## Obligación de lectura
+
+Antes de comenzar CUALQUIER tarea, DEBES leer estos archivos del Memory Bank:
+
+1. `memory-bank/projectbrief.md` - Qué es el producto y alcance
+2. `memory-bank/productContext.md` - Por qué existe y cómo funciona
+3. `memory-bank/systemPatterns.md` - Arquitectura y patrones del código
+4. `memory-bank/techContext.md` - Stack tecnológico y setup
+5. `memory-bank/activeContext.md` - Estado actual y próximos pasos
+6. `memory-bank/progress.md` - Qué funciona y qué falta
+
+## Cuándo actualizar el Memory Bank
+
+Actualiza el Memory Bank en estos casos:
+
+-   **Después de implementar cambios significativos**: Nuevas features, cambios arquitectónicos, nuevos endpoints
+-   **Cuando descubres nuevos patrones**: Si encuentras patrones repetidos en el código que no están documentados
+-   **Cuando se corrigen suposiciones**: Si algo que estaba marcado como UNKNOWN se resuelve
+-   **Cuando el usuario lo solicita**: Si el usuario pide explícitamente "update memory bank"
+-   **Después de cambios en configuración**: Variables de entorno, dependencias, scripts
+
+## Disciplina de output
+
+### No inventes información
+
+-   **Si algo no se puede inferir del código**: Márcalo como `UNKNOWN` y crea una lista de "Preguntas al humano"
+-   **Si hay incertidumbre**: Documenta la incertidumbre en lugar de asumir
+-   **Usa ejemplos reales**: Extrae ejemplos del código, no los inventes
+
+### Mantén actualizados estos archivos
+
+-   **`activeContext.md`**: Estado actual del proyecto, en qué se está trabajando
+-   **`progress.md`**: Qué funciona, qué falta, known issues, quick wins
+-   **Archivos relevantes**: Si cambias endpoints, actualiza `interfaces/api.md`. Si cambias arquitectura, actualiza `architecture/overview.md`
+
+## Estructura del Memory Bank
+
+El Memory Bank está organizado en:
+
+-   **Core files**: `projectbrief.md`, `productContext.md`, `systemPatterns.md`, `techContext.md`, `activeContext.md`, `progress.md`
+-   **Architecture**: `architecture/overview.md`, `architecture/diagrams.md`
+-   **Domains**: `domains/domain-model.md`, `domains/key-flows.md`
+-   **Interfaces**: `interfaces/api.md`, `interfaces/events-jobs.md`
+-   **Ops**: `ops/local-dev.md`, `ops/deployment.md`, `ops/observability.md`
+-   **Quality**: `quality/testing.md`, `quality/linting-format.md`
+-   **Decisions**: `decisions/ADR-*.md` (si hay decisiones arquitectónicas documentadas)
+
+## Formato de actualización
+
+Al actualizar el Memory Bank:
+
+1. **Mantén el formato Markdown consistente**
+2. **Incluye ubicaciones de código**: Usa rutas de archivos cuando sea relevante
+3. **Marca incertidumbres**: Usa `UNKNOWN` para información no disponible
+4. **Incluye ejemplos reales**: Extrae ejemplos del código cuando sea posible
+5. **Actualiza fechas**: Si cambias `activeContext.md`, actualiza la fecha
+
+## Ejemplo de actualización
+
+Si implementas un nuevo endpoint:
+
+1. Actualiza `interfaces/api.md` con el nuevo endpoint
+2. Actualiza `progress.md` marcando como completado
+3. Actualiza `activeContext.md` si es relevante
+4. Si cambia la arquitectura, actualiza `architecture/overview.md`
+
+## Preguntas al humano
+
+Si encuentras información que no puedes inferir del código, documenta las preguntas en `activeContext.md` bajo "Incertidumbres marcadas" o "Preguntas al humano".
