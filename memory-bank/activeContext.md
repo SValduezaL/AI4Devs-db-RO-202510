@@ -4,7 +4,7 @@
 
 **Estado inicial**: Memory Bank actualizado el 2025-01-27
 
-**Última actualización**: 2025-12-16 - Expansión de base de datos con nuevas entidades para flujo completo de aplicaciones y organización de reglas de Cursor
+**Última actualización**: 2025-12-16 - Migración de base de datos completada con nuevas entidades de entrevistas
 
 **Contexto actual**: Proyecto en estado funcional básico con:
 
@@ -44,11 +44,10 @@
     - Sigue convención del proyecto (formato `.mdc` con frontmatter YAML)
     - Aplica automáticamente a archivos Prisma y SQL
 5. ✅ **Documentación de migración**: Creado `backend/prisma/migrations/README_MIGRATION.md` con guía completa
-6. ⚠️ **Migración pendiente**: La migración de Prisma debe crearse cuando la base de datos esté corriendo
-
-**Próximo paso requerido**:
-
--   Ejecutar `npx prisma migrate dev --name expand_database_with_interview_entities` cuando la BD esté disponible
+6. ✅ **Migración aplicada (2025-12-16)**: Migración `20251216224021_expand_database_with_interview_entities` creada y aplicada exitosamente
+    - Todas las tablas creadas en la base de datos
+    - Índices y foreign keys configurados correctamente
+    - Puerto de base de datos cambiado a 5433 (resuelto conflicto de puertos)
 
 ## Próximas decisiones pendientes
 

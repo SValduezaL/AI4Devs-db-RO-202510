@@ -29,7 +29,8 @@
 -   Timestamps (createdAt, updatedAt) en todas las tablas
 -   Índices en foreign keys y columnas de búsqueda frecuente
 -   Script SQL de referencia: `backend/prisma/migrations/erd_to_sql.sql`
--   Migraciones disponibles (pendiente aplicar nueva migración)
+-   ✅ **Migración aplicada (2025-12-16)**: `20251216224021_expand_database_with_interview_entities`
+-   Puerto de base de datos: 5433 (cambiado desde 5432 para evitar conflictos)
 
 ✅ **Tests unitarios**
 
@@ -81,15 +82,15 @@
 
 ## Cambios recientes (2025-12-16)
 
-✅ **Expansión de base de datos completada**:
+✅ **Expansión de base de datos completada (2025-12-16)**:
 
 -   Schema Prisma actualizado con 8 nuevas entidades del ERD
 -   Buenas prácticas aplicadas: normalización 3NF, índices, constraints, timestamps
 -   Reglas de base de datos documentadas en `.cursor/rules/database-standards.mdc`
 -   Script SQL de referencia generado
 -   Documentación de migración creada
-
-⚠️ **Pendiente**: Aplicar migración cuando la base de datos esté disponible
+-   ✅ **Migración aplicada**: `20251216224021_expand_database_with_interview_entities`
+-   ✅ **Puerto actualizado**: Cambiado a 5433 para resolver conflicto de puertos
 
 ## Qué falta / TODOs detectados
 

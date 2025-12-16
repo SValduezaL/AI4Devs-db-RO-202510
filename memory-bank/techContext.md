@@ -181,9 +181,9 @@ Variables detectadas:
 
 | Variable       | Descripción                  | Ejemplo                                    | Ubicación                                      |
 | -------------- | ---------------------------- | ------------------------------------------ | ---------------------------------------------- |
-| `DATABASE_URL` | Connection string PostgreSQL | `postgresql://user:pass@localhost:5432/db` | `backend/prisma/schema.prisma`, `backend/.env` |
+| `DATABASE_URL` | Connection string PostgreSQL | `postgresql://user:pass@localhost:5433/db` | `backend/prisma/schema.prisma`, `backend/.env` |
 | `DB_NAME`      | Nombre de la base de datos   | `mydatabase`                               | `.env` (raíz), usado por docker-compose        |
-| `DB_PORT`      | Puerto de PostgreSQL         | `5432`                                     | `.env` (raíz), usado por docker-compose        |
+| `DB_PORT`      | Puerto de PostgreSQL         | `5433` (cambiado desde 5432 el 2025-12-16) | `.env` (raíz), usado por docker-compose        |
 | `DB_USER`      | Usuario de PostgreSQL        | `postgres`                                 | `.env` (raíz), usado por docker-compose        |
 | `DB_PASSWORD`  | Password de PostgreSQL       | `password`                                 | `.env` (raíz), usado por docker-compose        |
 
@@ -191,12 +191,12 @@ Variables detectadas:
 
 Variables detectadas:
 
-| Variable      | Descripción                | Default (si no se setea) |
-| ------------- | -------------------------- | ------------------------ |
-| `DB_PASSWORD` | Password de PostgreSQL     | -                        |
-| `DB_USER`     | Usuario de PostgreSQL      | -                        |
-| `DB_NAME`     | Nombre de la base de datos | -                        |
-| `DB_PORT`     | Puerto de PostgreSQL       | 5432 (mapeado)           |
+| Variable      | Descripción                | Default (si no se setea)                          |
+| ------------- | -------------------------- | ------------------------------------------------- |
+| `DB_PASSWORD` | Password de PostgreSQL     | -                                                 |
+| `DB_USER`     | Usuario de PostgreSQL      | -                                                 |
+| `DB_NAME`     | Nombre de la base de datos | -                                                 |
+| `DB_PORT`     | Puerto de PostgreSQL       | 5433 (mapeado, cambiado desde 5432 el 2025-12-16) |
 
 **Nota**: No se detecta archivo `.env.example`, por lo que las variables exactas son UNKNOWN. Se infieren del `docker-compose.yml` y uso de `DATABASE_URL` en Prisma.
 
