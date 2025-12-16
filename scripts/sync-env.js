@@ -38,14 +38,23 @@ envContent.split("\n").forEach((line) => {
 });
 
 // Validar variables requeridas
+// Distinguir entre variable faltante (undefined) y variable con valor vacío (string vacío)
 const requiredVars = ["DB_USER", "DB_PASSWORD", "DB_PORT", "DB_NAME"];
-const missingVars = requiredVars.filter((v) => !envVars[v]);
+const missingVars = requiredVars.filter((v) => !(v in envVars));
 
 if (missingVars.length > 0) {
     console.error(
         `❌ Error: Faltan variables en .env: ${missingVars.join(", ")}`
     );
     process.exit(1);
+}
+
+// Validar que las variables no estén vacías (opcional, pero recomendado)
+const emptyVars = requiredVars.filter((v) => envVars[v] === "");
+if (emptyVars.length > 0) {
+    console.warn(
+        `⚠️  Advertencia: Variables con valor vacío en .env: ${emptyVars.join(", ")}`
+    );
 }
 
 // Construir DATABASE_URL

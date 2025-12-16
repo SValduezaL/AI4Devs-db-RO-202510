@@ -35,8 +35,15 @@ foreach ($line in $envContent) {
 }
 
 # Validar que todas las variables estén presentes
-if (-not $dbUser -or -not $dbPassword -or -not $dbPort -or -not $dbName) {
-    Write-Host "❌ Error: Faltan variables en .env (DB_USER, DB_PASSWORD, DB_PORT, DB_NAME)" -ForegroundColor Red
+# Usar -eq $null para distinguir entre variable faltante y variable con valor vacío
+$missingVars = @()
+if ($null -eq $dbUser -or $dbUser -eq "") { $missingVars += "DB_USER" }
+if ($null -eq $dbPassword -or $dbPassword -eq "") { $missingVars += "DB_PASSWORD" }
+if ($null -eq $dbPort -or $dbPort -eq "") { $missingVars += "DB_PORT" }
+if ($null -eq $dbName -or $dbName -eq "") { $missingVars += "DB_NAME" }
+
+if ($missingVars.Count -gt 0) {
+    Write-Host "❌ Error: Faltan o están vacías las siguientes variables en .env: $($missingVars -join ', ')" -ForegroundColor Red
     exit 1
 }
 
