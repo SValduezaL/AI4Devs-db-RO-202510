@@ -22,10 +22,14 @@
 
 ✅ **Base de datos**
 
--   Schema Prisma definido
--   Modelos: Candidate, Education, WorkExperience, Resume
--   Relaciones configuradas
--   Migraciones disponibles
+-   Schema Prisma definido y expandido (2025-12-16)
+-   Modelos originales: Candidate, Education, WorkExperience, Resume
+-   Nuevos modelos (2025-12-16): Company, Employee, Position, InterviewFlow, InterviewStep, InterviewType, Application, Interview
+-   Relaciones configuradas con constraints apropiados
+-   Timestamps (createdAt, updatedAt) en todas las tablas
+-   Índices en foreign keys y columnas de búsqueda frecuente
+-   Script SQL de referencia: `backend/prisma/migrations/erd_to_sql.sql`
+-   Migraciones disponibles (pendiente aplicar nueva migración)
 
 ✅ **Tests unitarios**
 
@@ -74,6 +78,18 @@
 -   TypeScript compila correctamente
 -   Frontend build funcional
 -   Scripts npm configurados
+
+## Cambios recientes (2025-12-16)
+
+✅ **Expansión de base de datos completada**:
+
+-   Schema Prisma actualizado con 8 nuevas entidades del ERD
+-   Buenas prácticas aplicadas: normalización 3NF, índices, constraints, timestamps
+-   Reglas de base de datos documentadas en `.cursor/rules/database-standards.mdc`
+-   Script SQL de referencia generado
+-   Documentación de migración creada
+
+⚠️ **Pendiente**: Aplicar migración cuando la base de datos esté disponible
 
 ## Qué falta / TODOs detectados
 

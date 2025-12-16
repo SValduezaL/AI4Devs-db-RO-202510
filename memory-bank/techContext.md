@@ -279,6 +279,10 @@ No se detectan variables de entorno específicas en el código frontend.
 -   **Prettier**: Configurado en backend (UNKNOWN: configuración exacta)
 -   **Jest**: Configurado para backend y frontend
 -   **Prisma Studio**: Disponible via `npx prisma studio` (GUI para BD)
+-   **Cursor Rules**: Reglas de desarrollo en `.cursor/rules/`:
+    -   `engineering-standards.mdc` - Estándares de ingeniería y convenciones
+    -   `memory-bank.mdc` - Workflow obligatorio del Memory Bank
+    -   `database-standards.mdc` - Estándares de diseño de base de datos (añadido 2025-12-16)
 
 ## Observaciones técnicas
 

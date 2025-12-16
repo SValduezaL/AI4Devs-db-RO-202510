@@ -1,0 +1,116 @@
+---
+description: "Database design standards and best practices for Prisma and PostgreSQL"
+globs: ["**/*.prisma", "**/migrations/**/*.sql", "**/schema.prisma"]
+alwaysApply: true
+---
+
+# Reglas de Base de Datos
+
+## Estándares de Diseño
+
+### Normalización
+
+-   **3NF (Tercera Forma Normal)**: Todas las tablas deben estar normalizadas hasta 3NF
+-   **Evitar redundancia**: No duplicar datos que puedan derivarse de otras tablas
+-   **Claves foráneas**: Usar relaciones apropiadas en lugar de almacenar datos duplicados
+
+### Naming Conventions
+
+-   **Tablas**: PascalCase (ej: `Company`, `InterviewStep`)
+-   **Columnas**: camelCase en Prisma, snake_case en SQL cuando se mapea (ej: `companyId` → `company_id`)
+-   **Índices**: `{Table}_{column}_idx` para índices simples, `{Table}_{columns}_idx` para compuestos
+-   **Constraints**: `{Table}_{column}_fkey` para foreign keys, `{Table}_{constraint}_check` para checks
+
+### Tipos de Datos
+
+-   **IDs**: `Int` con `@default(autoincrement())` o `SERIAL` en SQL
+-   **Strings cortos**: `@db.VarChar(n)` con límite apropiado
+-   **Textos largos**: `@db.Text` para descripciones, notas, etc.
+-   **Fechas**: `DateTime` para timestamps, `@db.Date` para fechas sin hora
+-   **Booleanos**: `Boolean` con `@default(true/false)` cuando tenga sentido
+-   **Decimales**: `Decimal` con precisión `@db.Decimal(10, 2)` para salarios, montos
+
+### Timestamps
+
+-   **Obligatorios**: Todas las tablas deben tener `createdAt` y `updatedAt`
+-   **Formato**: `DateTime @default(now())` y `DateTime @updatedAt`
+-   **Índices**: Considerar índices en `createdAt` si se consulta frecuentemente
+
+### Índices
+
+-   **Primary Keys**: Automáticos, no necesitan índice explícito
+-   **Foreign Keys**: Siempre crear índice en columnas FK para mejorar JOINs
+-   **Búsquedas frecuentes**: Índices en columnas usadas en WHERE, ORDER BY, GROUP BY
+-   **Índices compuestos**: Para queries que filtran por múltiples columnas
+-   **Unique constraints**: Usar `@unique` en Prisma para emails, nombres únicos
+
+### Constraints y Validaciones
+
+-   **Foreign Keys**: Siempre definir `onDelete` y `onUpdate`
+    -   `Cascade`: Eliminar/actualizar registros relacionados
+    -   `Restrict`: Prevenir eliminación si hay referencias
+    -   `SetNull`: Establecer NULL (solo si la columna es nullable)
+-   **Check constraints**: Para validaciones de dominio (ej: score entre 0-100)
+-   **NOT NULL**: Usar `?` en Prisma solo cuando el campo sea realmente opcional
+
+### Relaciones
+
+-   **One-to-Many**: Usar foreign key en la tabla "many"
+-   **Many-to-Many**: Crear tabla intermedia con ambas foreign keys
+-   **One-to-One**: Foreign key en una de las tablas con `@unique`
+
+### Buenas Prácticas Específicas
+
+-   **Soft deletes**: Considerar `deletedAt` si se necesita borrado lógico
+-   **Status fields**: Usar ENUMs o VARCHAR con valores predefinidos (ej: 'draft', 'published', 'closed')
+-   **Campos calculados**: No almacenar, calcular en queries o aplicación
+-   **Auditoría**: Considerar campos `createdBy`, `updatedBy` si hay autenticación
+
+## Migraciones Prisma
+
+### Crear Migraciones
+
+```bash
+npx prisma migrate dev --name descriptive_name
+```
+
+### Reglas de Migraciones
+
+-   **Nunca editar migraciones aplicadas**: Crear nuevas migraciones para cambios
+-   **Nombres descriptivos**: Usar nombres que expliquen el cambio (ej: `add_interview_tables`)
+-   **Revisar SQL generado**: Verificar que Prisma genere el SQL correcto
+-   **Backup antes de migraciones grandes**: En producción, hacer backup de BD
+
+### Orden de Creación
+
+1. Tablas sin dependencias primero (ej: `Company`, `InterviewType`)
+2. Tablas con dependencias después (ej: `Employee` después de `Company`)
+3. Tablas de relación al final (ej: `Interview`)
+
+## Performance
+
+### Consultas
+
+-   **Evitar N+1 queries**: Usar `include` o `select` en Prisma para cargar relaciones
+-   **Paginación**: Implementar `skip` y `take` para listados grandes
+-   **Índices**: Revisar `EXPLAIN ANALYZE` en PostgreSQL para queries lentas
+
+### Optimización
+
+-   **Índices compuestos**: Para queries con múltiples filtros
+-   **Índices parciales**: Para queries sobre subconjuntos (ej: solo registros activos)
+-   **Normalización vs Denormalización**: Balancear según necesidades de lectura/escritura
+
+## Documentación
+
+### Schema Prisma
+
+-   **Comentarios**: Añadir comentarios en modelos complejos
+-   **Mapas**: Usar `@@map` para nombres de tabla diferentes en BD
+-   **Validaciones**: Documentar constraints y reglas de negocio en comentarios
+
+### SQL Scripts
+
+-   **Comentarios**: Añadir comentarios explicativos en scripts SQL
+-   **Secciones**: Organizar scripts en secciones claras
+-   **Documentación**: Incluir descripción de propósito de cada tabla

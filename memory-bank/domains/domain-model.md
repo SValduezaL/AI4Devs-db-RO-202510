@@ -20,6 +20,7 @@
 -   `educations`: One-to-Many con Education
 -   `workExperiences`: One-to-Many con WorkExperience
 -   `resumes`: One-to-Many con Resume
+-   `applications`: One-to-Many con Application (nuevo)
 
 **Ubicación**: `backend/src/domain/models/Candidate.ts`, `backend/prisma/schema.prisma`
 
@@ -110,6 +111,225 @@
 -   Solo se permiten PDF y DOCX
 -   Tamaño máximo: 10MB
 -   Un candidato puede tener múltiples CVs (relación One-to-Many)
+
+## Nuevas entidades (añadidas 2025-12-16)
+
+### Company (Empresa)
+
+**Descripción**: Representa una empresa que publica posiciones de trabajo.
+
+**Atributos**:
+
+-   `id` (Int, PK, autoincrement): Identificador único
+-   `name` (String, 255): Nombre de la empresa
+-   `createdAt` (DateTime): Fecha de creación
+-   `updatedAt` (DateTime): Fecha de última actualización
+
+**Relaciones**:
+
+-   `employees`: One-to-Many con Employee
+-   `positions`: One-to-Many con Position
+
+**Ubicación**: `backend/prisma/schema.prisma`
+
+**Reglas de negocio**:
+
+-   Nombre es obligatorio
+-   Índice en nombre para búsquedas
+
+### Employee (Empleado)
+
+**Descripción**: Representa un empleado de una empresa que puede realizar entrevistas.
+
+**Atributos**:
+
+-   `id` (Int, PK, autoincrement): Identificador único
+-   `companyId` (Int, FK): Referencia a Company
+-   `name` (String, 255): Nombre del empleado
+-   `email` (String, 255, unique): Email del empleado (único)
+-   `role` (String, 100): Rol del empleado
+-   `isActive` (Boolean): Si el empleado está activo
+-   `createdAt` (DateTime): Fecha de creación
+-   `updatedAt` (DateTime): Fecha de última actualización
+
+**Relaciones**:
+
+-   `company`: Many-to-One con Company
+-   `interviews`: One-to-Many con Interview
+
+**Ubicación**: `backend/prisma/schema.prisma`
+
+**Reglas de negocio**:
+
+-   Email único en el sistema
+-   Índices en companyId, isActive, role
+
+### Position (Posición)
+
+**Descripción**: Representa una posición de trabajo disponible.
+
+**Atributos**:
+
+-   `id` (Int, PK, autoincrement): Identificador único
+-   `companyId` (Int, FK): Referencia a Company
+-   `interviewFlowId` (Int, FK): Referencia a InterviewFlow
+-   `title` (String, 255): Título de la posición
+-   `description` (Text, optional): Descripción general
+-   `status` (String, 50): Estado (draft, published, closed, etc.)
+-   `isVisible` (Boolean): Si la posición es visible públicamente
+-   `location` (String, 255, optional): Ubicación
+-   `jobDescription` (Text, optional): Descripción del trabajo
+-   `requirements` (Text, optional): Requisitos
+-   `responsibilities` (Text, optional): Responsabilidades
+-   `salaryMin` (Decimal, optional): Salario mínimo
+-   `salaryMax` (Decimal, optional): Salario máximo
+-   `employmentType` (String, 50, optional): Tipo de empleo (full-time, part-time, etc.)
+-   `benefits` (Text, optional): Beneficios
+-   `companyDescription` (Text, optional): Descripción de la empresa
+-   `applicationDeadline` (Date, optional): Fecha límite de aplicación
+-   `contactInfo` (String, 255, optional): Información de contacto
+-   `createdAt` (DateTime): Fecha de creación
+-   `updatedAt` (DateTime): Fecha de última actualización
+
+**Relaciones**:
+
+-   `company`: Many-to-One con Company
+-   `interviewFlow`: Many-to-One con InterviewFlow
+-   `applications`: One-to-Many con Application
+
+**Ubicación**: `backend/prisma/schema.prisma`
+
+**Reglas de negocio**:
+
+-   Status por defecto: 'draft'
+-   isVisible por defecto: false
+-   Índices en companyId, interviewFlowId, status, isVisible, applicationDeadline
+
+### InterviewFlow (Flujo de Entrevista)
+
+**Descripción**: Representa un flujo de entrevista predefinido que se asigna a posiciones.
+
+**Atributos**:
+
+-   `id` (Int, PK, autoincrement): Identificador único
+-   `description` (String, 500, optional): Descripción del flujo
+-   `createdAt` (DateTime): Fecha de creación
+-   `updatedAt` (DateTime): Fecha de última actualización
+
+**Relaciones**:
+
+-   `steps`: One-to-Many con InterviewStep
+-   `positions`: One-to-Many con Position
+
+**Ubicación**: `backend/prisma/schema.prisma`
+
+### InterviewStep (Paso de Entrevista)
+
+**Descripción**: Representa un paso individual dentro de un flujo de entrevista.
+
+**Atributos**:
+
+-   `id` (Int, PK, autoincrement): Identificador único
+-   `interviewFlowId` (Int, FK): Referencia a InterviewFlow
+-   `interviewTypeId` (Int, FK): Referencia a InterviewType
+-   `name` (String, 255): Nombre del paso
+-   `orderIndex` (Int): Orden dentro del flujo
+-   `createdAt` (DateTime): Fecha de creación
+-   `updatedAt` (DateTime): Fecha de última actualización
+
+**Relaciones**:
+
+-   `interviewFlow`: Many-to-One con InterviewFlow
+-   `interviewType`: Many-to-One con InterviewType
+-   `interviews`: One-to-Many con Interview
+
+**Ubicación**: `backend/prisma/schema.prisma`
+
+**Reglas de negocio**:
+
+-   orderIndex determina el orden de ejecución
+-   Índice compuesto en (interviewFlowId, orderIndex) para ordenamiento eficiente
+
+### InterviewType (Tipo de Entrevista)
+
+**Descripción**: Representa tipos de entrevista (técnica, HR, cultural, etc.).
+
+**Atributos**:
+
+-   `id` (Int, PK, autoincrement): Identificador único
+-   `name` (String, 100, unique): Nombre del tipo (único)
+-   `description` (Text, optional): Descripción del tipo
+-   `createdAt` (DateTime): Fecha de creación
+-   `updatedAt` (DateTime): Fecha de última actualización
+
+**Relaciones**:
+
+-   `steps`: One-to-Many con InterviewStep
+
+**Ubicación**: `backend/prisma/schema.prisma`
+
+**Reglas de negocio**:
+
+-   Nombre único en el sistema
+
+### Application (Aplicación)
+
+**Descripción**: Representa una aplicación de un candidato a una posición.
+
+**Atributos**:
+
+-   `id` (Int, PK, autoincrement): Identificador único
+-   `positionId` (Int, FK): Referencia a Position
+-   `candidateId` (Int, FK): Referencia a Candidate
+-   `applicationDate` (Date): Fecha de aplicación (por defecto: hoy)
+-   `status` (String, 50): Estado (pending, in_review, accepted, rejected, etc.)
+-   `notes` (Text, optional): Notas sobre la aplicación
+-   `createdAt` (DateTime): Fecha de creación
+-   `updatedAt` (DateTime): Fecha de última actualización
+
+**Relaciones**:
+
+-   `position`: Many-to-One con Position
+-   `candidate`: Many-to-One con Candidate
+-   `interviews`: One-to-Many con Interview
+
+**Ubicación**: `backend/prisma/schema.prisma`
+
+**Reglas de negocio**:
+
+-   Status por defecto: 'pending'
+-   Índices en positionId, candidateId, status, applicationDate
+-   Índice compuesto en (positionId, candidateId) para evitar duplicados
+
+### Interview (Entrevista)
+
+**Descripción**: Representa una entrevista realizada como parte del proceso de selección.
+
+**Atributos**:
+
+-   `id` (Int, PK, autoincrement): Identificador único
+-   `applicationId` (Int, FK): Referencia a Application
+-   `interviewStepId` (Int, FK): Referencia a InterviewStep
+-   `employeeId` (Int, FK): Referencia a Employee (entrevistador)
+-   `interviewDate` (DateTime): Fecha y hora de la entrevista
+-   `result` (String, 50, optional): Resultado (passed, failed, pending, etc.)
+-   `score` (Int, optional): Puntuación (0-100)
+-   `notes` (Text, optional): Notas de la entrevista
+-   `createdAt` (DateTime): Fecha de creación
+-   `updatedAt` (DateTime): Fecha de última actualización
+
+**Relaciones**:
+
+-   `application`: Many-to-One con Application
+-   `interviewStep`: Many-to-One con InterviewStep
+-   `employee`: Many-to-One con Employee
+
+**Ubicación**: `backend/prisma/schema.prisma`
+
+**Reglas de negocio**:
+
+-   Score debe estar entre 0 y 100 (check constraint)
+-   Índices en applicationId, interviewStepId, employeeId, interviewDate, result
 
 ## Modelo de datos (Prisma Schema)
 
@@ -225,17 +445,24 @@ await candidate.save(); // Persiste en BD
 2. **Fechas válidas**: `endDate` debe ser posterior a `startDate` (NO IMPLEMENTADO - debería validarse)
 3. **Archivo existe**: La ruta del CV debe apuntar a un archivo existente (validación implícita)
 
+## Conceptos implementados (2025-12-16)
+
+-   ✅ **Estados de aplicación**: Campo `status` en Application (pending, in_review, accepted, rejected, etc.)
+-   ✅ **Etapas del proceso**: InterviewFlow e InterviewStep para tracking de etapas de selección
+-   ✅ **Notas/comentarios**: Campo `notes` en Application e Interview
+-   ✅ **Timestamps automáticos**: `createdAt` y `updatedAt` en todas las tablas
+
 ## Conceptos ausentes (UNKNOWN)
 
--   **Estados del candidato**: No hay estados (nuevo, en proceso, rechazado, contratado)
--   **Etapas del proceso**: No hay tracking de etapas de selección
--   **Notas/comentarios**: No hay sistema de notas sobre candidatos
+-   **Estados del candidato**: No hay estados a nivel de candidato (solo a nivel de aplicación)
 -   **Tags/categorías**: No hay sistema de etiquetado
--   **Historial de cambios**: No hay auditoría de cambios
+-   **Historial de cambios**: No hay auditoría de cambios (solo timestamps básicos)
 
 ## Extensiones sugeridas
 
-1. **Estados del candidato**: Añadir campo `status` a Candidate
-2. **Validación de fechas**: Implementar validación `endDate > startDate`
+1. ✅ **Timestamps automáticos**: Implementado en todas las tablas (2025-12-16)
+2. **Validación de fechas**: Implementar validación `endDate > startDate` en Education y WorkExperience
 3. **Soft delete**: Añadir campo `deletedAt` para borrado lógico
-4. **Timestamps automáticos**: Añadir `createdAt` y `updatedAt` (Prisma puede hacerlo automáticamente)
+4. **Estados del candidato**: Añadir campo `status` a Candidate (independiente de Application)
+5. **ENUMs para status**: Convertir campos `status` (String) a ENUMs para mayor consistencia
+6. **Auditoría avanzada**: Añadir campos `createdBy`, `updatedBy` si se implementa autenticación

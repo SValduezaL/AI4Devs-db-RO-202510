@@ -4,15 +4,16 @@
 
 **Estado inicial**: Memory Bank actualizado el 2025-01-27
 
-**Última actualización**: 2025-01-27 - Memory Bank regenerado con información real extraída del código y contexto confirmado (ejercicio de aprendizaje)
+**Última actualización**: 2025-12-16 - Expansión de base de datos con nuevas entidades para flujo completo de aplicaciones y organización de reglas de Cursor
 
 **Contexto actual**: Proyecto en estado funcional básico con:
 
 -   Backend API REST operativa
 -   Frontend React con dashboard y formulario
--   Base de datos PostgreSQL configurada
+-   Base de datos PostgreSQL configurada y expandida
 -   Tests unitarios implementados (backend)
 -   Sistema de upload de archivos funcional
+-   ✅ **NUEVO**: Schema de base de datos expandido con entidades para flujo completo de aplicaciones (Company, Employee, Position, InterviewFlow, InterviewStep, InterviewType, Application, Interview)
 
 ## Contexto confirmado
 
@@ -24,13 +25,38 @@
 4. **Escala**: ✅ **No se esperan candidatos reales**, es un ejercicio
 5. **Integraciones**: ✅ **No hay planes de integrar con ATS u otros sistemas**
 
+## Cambios recientes (2025-12-16)
+
+**Expansión de base de datos (2025-12-16)**:
+
+1. ✅ **Schema Prisma actualizado**: Añadidas 8 nuevas entidades del ERD proporcionado
+    - Company, Employee, Position, InterviewFlow, InterviewStep, InterviewType, Application, Interview
+    - Entidades existentes actualizadas con timestamps (createdAt, updatedAt)
+2. ✅ **Buenas prácticas aplicadas**:
+    - Timestamps (createdAt, updatedAt) en todas las tablas
+    - Índices en foreign keys y columnas de búsqueda frecuente
+    - Índices compuestos para queries comunes
+    - Constraints apropiados (onDelete, onUpdate)
+    - Normalización 3NF
+    - Check constraints (ej: score 0-100 en Interview)
+3. ✅ **Script SQL generado**: `backend/prisma/migrations/erd_to_sql.sql` con estructura completa y comentarios
+4. ✅ **Reglas de base de datos**: Creado `.cursor/rules/database-standards.mdc` con estándares de diseño de BD
+    - Sigue convención del proyecto (formato `.mdc` con frontmatter YAML)
+    - Aplica automáticamente a archivos Prisma y SQL
+5. ✅ **Documentación de migración**: Creado `backend/prisma/migrations/README_MIGRATION.md` con guía completa
+6. ⚠️ **Migración pendiente**: La migración de Prisma debe crearse cuando la base de datos esté corriendo
+
+**Próximo paso requerido**:
+
+-   Ejecutar `npx prisma migrate dev --name expand_database_with_interview_entities` cuando la BD esté disponible
+
 ## Próximas decisiones pendientes
 
 **Pendiente de definir**:
 
-1. **Próximas features**: ¿Qué funcionalidades se planean añadir al ejercicio?
-2. **Prioridades**: ¿Qué áreas necesitan mejoras urgentes?
-3. **Alcance del ejercicio**: ¿Hasta qué punto se debe desarrollar?
+1. **Implementación de servicios**: ¿Crear servicios/controladores para las nuevas entidades?
+2. **Endpoints API**: ¿Qué endpoints se necesitan para el flujo completo?
+3. **Prioridades**: ¿Qué áreas necesitan mejoras urgentes?
 
 ## Next steps sugeridos (backlog inicial)
 
