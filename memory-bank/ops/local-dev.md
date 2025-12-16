@@ -34,15 +34,23 @@ npm install
 
 **IMPORTANTE**: El proyecto usa un `.env` en la **raíz del proyecto** para `docker-compose.yml` y otro en `backend/` para Prisma.
 
-**Archivo `.env` en la raíz** (ya existe):
+**Crear archivo `.env` en la raíz** (copiar desde `.env.example`):
+
+```bash
+# Desde la raíz del proyecto
+cp .env.example .env
+```
+
+Luego editar `.env` con tus valores:
 
 ```env
-DB_NAME=mydatabase
+DB_NAME=LTIdb
 DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=password
-DATABASE_URL="postgresql://postgres:password@localhost:5432/mydatabase"
+DB_USER=LTIdbUser
+DB_PASSWORD=your_password_here
 ```
+
+**Nota**: El archivo `.env` no está versionado (está en `.gitignore`). Debes crearlo desde `.env.example` después de clonar el repositorio.
 
 **Crear archivo `backend/.env`** (solo para Prisma):
 
