@@ -166,13 +166,26 @@ docker-compose logs -f db
 
 ## Config/Env: Variables de entorno
 
-### Backend (.env)
+### Backend
 
-Variables detectadas en código:
+**IMPORTANTE**: El proyecto usa **dos archivos `.env`**:
+
+1. **`.env` en la raíz** (para `docker-compose.yml`):
+
+    - `DB_NAME`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DATABASE_URL`
+
+2. **`backend/.env`** (para Prisma):
+    - Solo `DATABASE_URL` (debe coincidir con el de la raíz)
+
+Variables detectadas:
 
 | Variable       | Descripción                  | Ejemplo                                    | Ubicación                                      |
 | -------------- | ---------------------------- | ------------------------------------------ | ---------------------------------------------- |
 | `DATABASE_URL` | Connection string PostgreSQL | `postgresql://user:pass@localhost:5432/db` | `backend/prisma/schema.prisma`, `backend/.env` |
+| `DB_NAME`      | Nombre de la base de datos   | `mydatabase`                               | `.env` (raíz), usado por docker-compose        |
+| `DB_PORT`      | Puerto de PostgreSQL         | `5432`                                     | `.env` (raíz), usado por docker-compose        |
+| `DB_USER`      | Usuario de PostgreSQL        | `postgres`                                 | `.env` (raíz), usado por docker-compose        |
+| `DB_PASSWORD`  | Password de PostgreSQL       | `password`                                 | `.env` (raíz), usado por docker-compose        |
 
 ### Docker Compose (docker-compose.yml)
 

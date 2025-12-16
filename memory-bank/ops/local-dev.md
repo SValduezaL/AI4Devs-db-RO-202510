@@ -32,18 +32,41 @@ npm install
 
 ### 4. Configurar variables de entorno
 
-Crear archivo `backend/.env`:
+**IMPORTANTE**: El proyecto usa un `.env` en la **raíz del proyecto** para `docker-compose.yml` y otro en `backend/` para Prisma.
+
+**Archivo `.env` en la raíz** (ya existe):
+
+```env
+DB_NAME=mydatabase
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=password
+DATABASE_URL="postgresql://postgres:password@localhost:5432/mydatabase"
+```
+
+**Crear archivo `backend/.env`** (solo para Prisma):
 
 ```env
 DATABASE_URL="postgresql://postgres:password@localhost:5432/mydatabase"
 ```
 
-**Nota**: Ajustar según configuración de `docker-compose.yml`:
+**Sincronización automática**: Usa el script de sincronización para generar `backend/.env` desde el `.env` de la raíz:
 
--   Usuario: `DB_USER` (default: `postgres`)
--   Password: `DB_PASSWORD` (default: `password`)
--   Base de datos: `DB_NAME` (default: `mydatabase`)
--   Puerto: `DB_PORT` (default: `5432`)
+```bash
+# Desde la raíz del proyecto
+npm run sync-env
+
+# O desde backend/
+cd backend
+npm run sync-env
+```
+
+**Scripts disponibles**:
+
+-   `scripts/sync-env.js` - Script Node.js (multiplataforma)
+-   `scripts/sync-env.ps1` - Script PowerShell (Windows)
+
+**Nota**: El `DATABASE_URL` en `backend/.env` debe coincidir con las variables del `.env` de la raíz. El script de sincronización lo hace automáticamente.
 
 ### 5. Iniciar base de datos
 

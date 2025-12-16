@@ -15,7 +15,9 @@ declare global {
   }
 }
 
-dotenv.config();
+// Cargar .env desde la raíz del proyecto (donde está docker-compose.yml)
+import path from 'path';
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 const prisma = new PrismaClient();
 
 export const app = express();

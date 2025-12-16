@@ -10,19 +10,21 @@ alwaysApply: true
 
 ### Backend (TypeScript)
 
-- **Lenguaje**: TypeScript 4.9.5
-- **Module system**: CommonJS (`"module": "commonjs"`)
-- **Target**: ES5
-- **Linting**: ESLint 9.2.0 + Prettier 3.2.5
-- **Testing**: Jest 29.7.0 + ts-jest 29.2.5
+-   **Lenguaje**: TypeScript 4.9.5
+-   **Module system**: CommonJS (`"module": "commonjs"`)
+-   **Target**: ES5
+-   **Linting**: ESLint 9.2.0 + Prettier 3.2.5
+-   **Testing**: Jest 29.7.0 + ts-jest 29.2.5
 
 **Naming conventions**:
-- Archivos: `camelCase.ts` (ej: `candidateService.ts`)
-- Clases: `PascalCase` (ej: `Candidate`, `Education`)
-- Funciones: `camelCase` (ej: `addCandidate`, `validateEmail`)
-- Constantes: `UPPER_SNAKE_CASE` (si aplica)
+
+-   Archivos: `camelCase.ts` (ej: `candidateService.ts`)
+-   Clases: `PascalCase` (ej: `Candidate`, `Education`)
+-   Funciones: `camelCase` (ej: `addCandidate`, `validateEmail`)
+-   Constantes: `UPPER_SNAKE_CASE` (si aplica)
 
 **Estructura de carpetas**:
+
 ```
 backend/src/
   application/      # Lógica de aplicación (services, validators)
@@ -33,17 +35,19 @@ backend/src/
 
 ### Frontend (React)
 
-- **Framework**: React 18.3.1
-- **Build tool**: Create React App (react-scripts 5.0.1)
-- **Lenguaje**: TypeScript parcial (mezcla de `.js` y `.tsx`)
-- **UI Library**: React Bootstrap 2.10.2
+-   **Framework**: React 18.3.1
+-   **Build tool**: Create React App (react-scripts 5.0.1)
+-   **Lenguaje**: TypeScript parcial (mezcla de `.js` y `.tsx`)
+-   **UI Library**: React Bootstrap 2.10.2
 
 **Naming conventions**:
-- Componentes: `PascalCase.js` o `PascalCase.tsx` (ej: `AddCandidateForm.js`)
-- Servicios: `camelCase.js` (ej: `candidateService.js`)
-- Archivos: `camelCase.js` o `PascalCase.tsx`
+
+-   Componentes: `PascalCase.js` o `PascalCase.tsx` (ej: `AddCandidateForm.js`)
+-   Servicios: `camelCase.js` (ej: `candidateService.js`)
+-   Archivos: `camelCase.js` o `PascalCase.tsx`
 
 **Estructura de carpetas**:
+
 ```
 frontend/src/
   components/       # Componentes React
@@ -55,14 +59,14 @@ frontend/src/
 
 ### Backend
 
-- **ESLint**: Configurado (configuración exacta UNKNOWN)
-- **Prettier**: Configurado (configuración exacta UNKNOWN)
-- **Ejecutar**: `npm run lint` (si existe) o verificar en CI
+-   **ESLint**: Configurado (configuración exacta UNKNOWN)
+-   **Prettier**: Configurado (configuración exacta UNKNOWN)
+-   **Ejecutar**: `npm run lint` (si existe) o verificar en CI
 
 ### Frontend
 
-- **ESLint**: Configurado via Create React App (react-app, react-app/jest)
-- **Ejecutar**: `npm test` (incluye linting)
+-   **ESLint**: Configurado via Create React App (react-app, react-app/jest)
+-   **Ejecutar**: `npm test` (incluye linting)
 
 ## Estilo de commits
 
@@ -74,36 +78,37 @@ frontend/src/
 
 ### Backend
 
-- **Framework**: Jest + ts-jest
-- **Ubicación**: Archivos `*.test.ts` junto al código
-- **Ejecutar**: `cd backend && npm test`
-- **Cobertura**: UNKNOWN (no se detecta configuración de coverage)
+-   **Framework**: Jest + ts-jest
+-   **Ubicación**: Archivos `*.test.ts` junto al código
+-   **Ejecutar**: `cd backend && npm test`
+-   **Cobertura**: UNKNOWN (no se detecta configuración de coverage)
 
 **Convenciones**:
-- Tests unitarios para servicios, controladores, validadores
-- Tests de modelos de dominio
-- Ubicación: `backend/src/**/*.test.ts`
+
+-   Tests unitarios para servicios, controladores, validadores
+-   Tests de modelos de dominio
+-   Ubicación: `backend/src/**/*.test.ts`
 
 ### Frontend
 
-- **Framework**: Jest + React Testing Library
-- **Estado**: Configurado pero no se detectan tests escritos
-- **Ejecutar**: `cd frontend && npm test`
+-   **Framework**: Jest + React Testing Library
+-   **Estado**: Configurado pero no se detectan tests escritos
+-   **Ejecutar**: `cd frontend && npm test`
 
 ## Zonas "don't touch"
 
 **No hay zonas explícitas marcadas como "don't touch"**, pero:
 
-- **Prisma schema**: Cambios requieren migraciones (`npx prisma migrate dev`)
-- **Docker Compose**: Configuración de BD, modificar con cuidado
-- **Build outputs**: `backend/dist/`, `frontend/build/` (generados automáticamente)
+-   **Prisma schema**: Cambios requieren migraciones (`npx prisma migrate dev`)
+-   **Docker Compose**: Configuración de BD, modificar con cuidado
+-   **Build outputs**: `backend/dist/`, `frontend/build/` (generados automáticamente)
 
 ## Test-first o no
 
 **Estado actual**: Tests escritos después del código (no TDD)
 
-- Backend tiene tests unitarios existentes
-- Frontend no tiene tests escritos (solo configuración)
+-   Backend tiene tests unitarios existentes
+-   Frontend no tiene tests escritos (solo configuración)
 
 ## Cómo proponer cambios
 
@@ -112,40 +117,41 @@ frontend/src/
 1. **Plan**: Documenta qué vas a cambiar y por qué
 2. **Código**: Implementa los cambios
 3. **Tests**: Añade/actualiza tests si aplica
-4. **Verificación**: 
-   - Backend: `npm run build && npm test`
-   - Frontend: `npm run build && npm test`
+4. **Verificación**:
+    - Backend: `npm run build && npm test`
+    - Frontend: `npm run build && npm test`
 5. **Documentación**: Actualiza Memory Bank si hay cambios arquitectónicos
 6. **Diff**: Revisa los cambios antes de commit
 
 ### Checklist antes de commit
 
-- [ ] Código compila sin errores
-- [ ] Tests pasan
-- [ ] No hay errores de linting
-- [ ] Memory Bank actualizado (si aplica)
-- [ ] Variables de entorno documentadas (si se añaden nuevas)
+-   [ ] Código compila sin errores
+-   [ ] Tests pasan
+-   [ ] No hay errores de linting
+-   [ ] Memory Bank actualizado (si aplica)
+-   [ ] Variables de entorno documentadas (si se añaden nuevas)
 
 ## Manejo de errores
 
 ### Backend
 
-- **Códigos HTTP apropiados**: 200, 201, 400, 404, 500
-- **Formato JSON**: `{ "message": "error message" }` o `{ "error": "error message" }`
-- **Error handler global**: Middleware de Express al final de la cadena
-- **Logging**: `console.log` básico (mejorable a logging estructurado)
+-   **Códigos HTTP apropiados**: 200, 201, 400, 404, 500
+-   **Formato JSON**: `{ "message": "error message" }` o `{ "error": "error message" }`
+-   **Error handler global**: Middleware de Express al final de la cadena
+-   **Logging**: `console.log` básico (mejorable a logging estructurado)
 
 ### Frontend
 
-- **Manejo de errores**: Try-catch en funciones async
-- **Feedback al usuario**: Alertas de Bootstrap (success/error)
-- **Estado de error**: State management básico con useState
+-   **Manejo de errores**: Try-catch en funciones async
+-   **Feedback al usuario**: Alertas de Bootstrap (success/error)
+-   **Estado de error**: State management básico con useState
 
 ## Dependencias
 
 ### Añadir dependencias
 
 **Backend**:
+
 ```bash
 cd backend
 npm install <package>
@@ -153,6 +159,7 @@ npm install --save-dev <package>  # Para dev dependencies
 ```
 
 **Frontend**:
+
 ```bash
 cd frontend
 npm install <package>
@@ -162,16 +169,16 @@ npm install <package>
 
 ### Actualizar dependencias
 
-- **Backend**: Verificar compatibilidad con TypeScript 4.9.5
-- **Frontend**: Verificar compatibilidad con React 18.3.1 y Create React App 5.0.1
+-   **Backend**: Verificar compatibilidad con TypeScript 4.9.5
+-   **Frontend**: Verificar compatibilidad con React 18.3.1 y Create React App 5.0.1
 
 ## Base de datos
 
 ### Migraciones Prisma
 
-- **Crear migración**: `cd backend && npx prisma migrate dev --name migration_name`
-- **Aplicar migraciones**: `npx prisma migrate dev`
-- **Generar cliente**: `npx prisma generate` (después de cambios en schema)
+-   **Crear migración**: `cd backend && npx prisma migrate dev --name migration_name`
+-   **Aplicar migraciones**: `npx prisma migrate dev`
+-   **Generar cliente**: `npx prisma generate` (después de cambios en schema)
 
 **Regla**: Nunca editar migraciones ya aplicadas. Crear nuevas migraciones para cambios.
 
@@ -179,26 +186,26 @@ npm install <package>
 
 ### Backend
 
-- **Archivo**: `backend/.env` (no versionado)
-- **Variables detectadas**: `DATABASE_URL`
-- **Añadir nuevas**: Documentar en `memory-bank/techContext.md` y `memory-bank/ops/local-dev.md`
+-   **Archivo**: `backend/.env` (no versionado)
+-   **Variables detectadas**: `DATABASE_URL`
+-   **Añadir nuevas**: Documentar en `memory-bank/techContext.md` y `memory-bank/ops/local-dev.md`
 
 ### Frontend
 
-- **Estado**: No se detectan variables de entorno específicas
-- **Create React App**: Soporta `.env` con prefijo `REACT_APP_`
+-   **Estado**: No se detectan variables de entorno específicas
+-   **Create React App**: Soporta `.env` con prefijo `REACT_APP_`
 
 ## Code review checklist
 
 Antes de hacer merge/commit:
 
-- [ ] Código sigue convenciones de naming
-- [ ] No hay `console.log` de debug (o se eliminan)
-- [ ] No hay código comentado innecesario
-- [ ] Tests pasan
-- [ ] No hay warnings de linting
-- [ ] Memory Bank actualizado si aplica
-- [ ] Documentación actualizada (README si cambian instrucciones)
+-   [ ] Código sigue convenciones de naming
+-   [ ] No hay `console.log` de debug (o se eliminan)
+-   [ ] No hay código comentado innecesario
+-   [ ] Tests pasan
+-   [ ] No hay warnings de linting
+-   [ ] Memory Bank actualizado si aplica
+-   [ ] Documentación actualizada (README si cambian instrucciones)
 
 ## Mejores prácticas específicas del proyecto
 
@@ -218,14 +225,14 @@ Antes de hacer merge/commit:
 
 ## Restricciones técnicas
 
-- **TypeScript**: Versión 4.9.5 (no actualizar sin verificar compatibilidad)
-- **Node.js**: Versión UNKNOWN (compatible con Express 4.x y Prisma 5.x)
-- **PostgreSQL**: Requerido para backend
-- **Docker**: Requerido para desarrollo local (PostgreSQL)
+-   **TypeScript**: Versión 4.9.5 (no actualizar sin verificar compatibilidad)
+-   **Node.js**: Versión UNKNOWN (compatible con Express 4.x y Prisma 5.x)
+-   **PostgreSQL**: Requerido para backend
+-   **Docker**: Requerido para desarrollo local (PostgreSQL)
 
 ## Observaciones
 
-- **Mezcla JS/TS en frontend**: Archivos `.js` y `.tsx` mezclados (considerar migración completa)
-- **No hay CI/CD**: Tests no se ejecutan automáticamente
-- **No hay Dockerfile**: Solo docker-compose para BD, no para aplicación
-- **Logging básico**: Solo `console.log`, considerar logging estructurado para producción
+-   **Mezcla JS/TS en frontend**: Archivos `.js` y `.tsx` mezclados (considerar migración completa)
+-   **No hay CI/CD**: Tests no se ejecutan automáticamente
+-   **No hay Dockerfile**: Solo docker-compose para BD, no para aplicación
+-   **Logging básico**: Solo `console.log`, considerar logging estructurado para producción
