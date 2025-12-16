@@ -192,7 +192,7 @@ model Application {
   id             Int        @id @default(autoincrement())
   positionId    Int        @map("position_id")
   candidateId   Int        @map("candidate_id")
-  applicationDate DateTime  @default(now()) @map("application_date") @db.Date
+  applicationDate DateTime  @default(dbgenerated("CURRENT_DATE")) @map("application_date") @db.Date
   status         String     @default("pending") @db.VarChar(50)
   notes          String?    @db.Text
   createdAt      DateTime   @default(now())
