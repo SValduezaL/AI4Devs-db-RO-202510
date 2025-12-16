@@ -48,6 +48,10 @@
     - Todas las tablas creadas en la base de datos
     - Índices y foreign keys configurados correctamente
     - Puerto de base de datos cambiado a 5433 (resuelto conflicto de puertos)
+7. ✅ **Documentación de prompts (2025-12-16)**: Creados archivos de documentación de prompts operativos
+    - `prompts-SVL.md` - Documentación completa de la sesión de expansión de base de datos
+    - `prompts-MemoryBank.md` - Documentación de prompts relacionados con Memory Bank
+    - Incluye todos los prompts principales, resultados y lecciones aprendidas
 
 ## Próximas decisiones pendientes
 

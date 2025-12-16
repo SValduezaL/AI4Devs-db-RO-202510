@@ -91,6 +91,7 @@
 -   Documentación de migración creada
 -   ✅ **Migración aplicada**: `20251216224021_expand_database_with_interview_entities`
 -   ✅ **Puerto actualizado**: Cambiado a 5433 para resolver conflicto de puertos
+-   ✅ **Documentación de prompts**: Creados `prompts-SVL.md` y `prompts-MemoryBank.md` con documentación completa de la sesión
 
 ## Qué falta / TODOs detectados
 
